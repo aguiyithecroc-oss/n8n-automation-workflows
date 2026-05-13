@@ -1,0 +1,3461 @@
+{
+  "name": "lead qualification and call booking appointment",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b34e7367-b5ef-4f25-8f01-9ef473bf587f",
+              "name": "body.firstName",
+              "value": "={{ $json.body.firstName }}",
+              "type": "string"
+            },
+            {
+              "id": "9bbcf1b6-5aab-4ee6-9350-0e552e5e4437",
+              "name": "body.phone",
+              "value": "={{ $json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "c998a783-6ccc-41f3-9b7c-e2e141f91c5f",
+              "name": "body.email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "6b914975-a8ae-4d57-916f-4e43d7695be2",
+              "name": "body.ownerStatus",
+              "value": "={{ $json.body.ownerStatus }}",
+              "type": "string"
+            },
+            {
+              "id": "f6f2488f-2e7a-4c77-83f5-280e85352422",
+              "name": "body.serviceType",
+              "value": "={{ $json.body.serviceType }}",
+              "type": "string"
+            },
+            {
+              "id": "21001de4-3ded-41c6-b459-6377d90e9d05",
+              "name": "body.submittedAt",
+              "value": "={{ $json.body.submittedAt }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        784
+      ],
+      "id": "904377aa-f360-4a40-bcb8-1c8435a59807",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6c34de61-c3cb-4853-a273-f2f16e1aeb1d",
+              "leftValue": "={{ $json.body.ownerStatus }}",
+              "rightValue": "homeowner",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        976,
+        784
+      ],
+      "id": "a8b8e4e6-904e-44fd-905b-5cd6d2cbcc9a",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Append or update row in sheet1').item.json.email }}",
+        "subject": "=",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2000,
+        288
+      ],
+      "id": "76c9668e-fad4-4010-aff9-409a9725f417",
+      "name": "Send a message",
+      "webhookId": "716b05b7-9ec2-4652-8f20-ee03bbc10b3d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AI1JVlXI5QOhE5Nk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "emergency repair",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $('Append or update row in sheet1').item.json.email }}",
+            "ai message": "={{ $json.plainTextEmail }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "names ",
+              "displayName": "names ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "owner status",
+              "displayName": "owner status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "service type",
+              "displayName": "service type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time stamp",
+              "displayName": "time stamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ai message",
+              "displayName": "ai message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "time booked for call",
+              "displayName": "time booked for call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "quote given",
+              "displayName": "quote given",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status ",
+              "displayName": "status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2224,
+        480
+      ],
+      "id": "98440fbb-3ebd-4872-905e-e4ee41af003f",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.serviceType }}",
+                    "rightValue": "repair",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "016de358-e667-45c9-9a37-b0d98d39bd0c"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "emergency repair"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "bd56bec1-ce11-45b1-b281-8486efa33dd4",
+                    "leftValue": "={{ $json.body.serviceType }}",
+                    "rightValue": "install",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "installation "
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "36214db3-5df3-41da-aecd-b1ac5ba13ab9",
+                    "leftValue": "={{ $json.body.serviceType }}",
+                    "rightValue": "tuneup",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "tune up"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        768
+      ],
+      "id": "e2170194-1558-4c70-b39f-cf593393f285",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "emergency repair",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $json.body.email }}",
+            "names ": "={{ $json.body.firstName }}",
+            "phone": "={{ $json.body.phone }}",
+            "owner status": "={{ $json.body.ownerStatus }}",
+            "service type": "={{ $json.body.serviceType }}",
+            "time stamp": "={{ $json.body.submittedAt }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "names ",
+              "displayName": "names ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "owner status",
+              "displayName": "owner status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "service type",
+              "displayName": "service type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "time stamp",
+              "displayName": "time stamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ai message",
+              "displayName": "ai message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time booked for call",
+              "displayName": "time booked for call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "quote given",
+              "displayName": "quote given",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status ",
+              "displayName": "status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1424,
+        384
+      ],
+      "id": "5d90cd31-66a8-41b1-93f9-1f7fac50b83a",
+      "name": "Append or update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Function to strip HTML and return clean plain text\nfunction htmlToPlainText(html) {\n  return html\n    // Remove script and style tags completely\n    .replace(/<script[^>]*>[\\s\\S]*?<\\/script>/gi, '')\n    .replace(/<style[^>]*>[\\s\\S]*?<\\/style>/gi, '')\n\n    // Replace <br> and </p> with line breaks\n    .replace(/<br\\s*\\/?>/gi, '\\n')\n    .replace(/<\\/p>/gi, '\\n')\n\n    // Remove all remaining HTML tags\n    .replace(/<[^>]+>/g, '')\n\n    // Decode common HTML entities\n    .replace(/&nbsp;/g, ' ')\n    .replace(/&amp;/g, '&')\n    .replace(/&lt;/g, '<')\n    .replace(/&gt;/g, '>')\n    .replace(/&quot;/g, '\"')\n    .replace(/&#39;/g, \"'\")\n\n    // Clean up spacing\n    .replace(/\\n\\s*\\n/g, '\\n\\n')\n    .replace(/[ \\t]+/g, ' ')\n    .trim();\n}\n\nconst items = $input.all();\n\nfor (const item of items) {\n  const html = item.json.output || item.json.data || '';\n\n  const plainText = htmlToPlainText(html);\n\n  // Save cleaned version\n  item.json.plainTextEmail = plainText;\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        480
+      ],
+      "id": "6db92461-c27e-4854-8750-605791634ccb",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1654910989,
+          "mode": "list",
+          "cachedResultName": "system installation ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1654910989"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $json.body.email }}",
+            "names ": "={{ $json.body.firstName }}",
+            "phone": "={{ $json.body.phone }}",
+            "owner status": "={{ $json.body.ownerStatus }}",
+            "service type": "={{ $json.body.serviceType }}",
+            "time stamp": "={{ $json.body.submittedAt }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "names ",
+              "displayName": "names ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "owner status",
+              "displayName": "owner status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "service type",
+              "displayName": "service type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "time stamp",
+              "displayName": "time stamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ai message",
+              "displayName": "ai message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time booked for call",
+              "displayName": "time booked for call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "quote given",
+              "displayName": "quote given",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status ",
+              "displayName": "status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1424,
+        784
+      ],
+      "id": "aee507d0-cc82-4221-94fa-779de7bc2dd2",
+      "name": "Append or update row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1419460508,
+          "mode": "list",
+          "cachedResultName": "routine tune up",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1419460508"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $json.body.email }}",
+            "names ": "={{ $json.body.firstName }}",
+            "phone": "={{ $json.body.phone }}",
+            "owner status": "={{ $json.body.ownerStatus }}",
+            "service type": "={{ $json.body.serviceType }}",
+            "time stamp": "={{ $json.body.submittedAt }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "names ",
+              "displayName": "names ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "owner status",
+              "displayName": "owner status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "service type",
+              "displayName": "service type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "time stamp",
+              "displayName": "time stamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ai message",
+              "displayName": "ai message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time booked for call",
+              "displayName": "time booked for call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "quote given",
+              "displayName": "quote given",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status ",
+              "displayName": "status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1424,
+        1168
+      ],
+      "id": "9d669ae5-4352-48c7-be53-3e7070981a14",
+      "name": "Append or update row in sheet3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('If1').item.json.email }}",
+        "subject": "=",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3248,
+        1072
+      ],
+      "id": "77456e59-c519-41ab-8ec2-8ef0934819e4",
+      "name": "Send a message1",
+      "webhookId": "716b05b7-9ec2-4652-8f20-ee03bbc10b3d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AI1JVlXI5QOhE5Nk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Function to strip HTML and return clean plain text\nfunction htmlToPlainText(html) {\n  return html\n    // Remove script and style tags completely\n    .replace(/<script[^>]*>[\\s\\S]*?<\\/script>/gi, '')\n    .replace(/<style[^>]*>[\\s\\S]*?<\\/style>/gi, '')\n\n    // Replace <br> and </p> with line breaks\n    .replace(/<br\\s*\\/?>/gi, '\\n')\n    .replace(/<\\/p>/gi, '\\n')\n\n    // Remove all remaining HTML tags\n    .replace(/<[^>]+>/g, '')\n\n    // Decode common HTML entities\n    .replace(/&nbsp;/g, ' ')\n    .replace(/&amp;/g, '&')\n    .replace(/&lt;/g, '<')\n    .replace(/&gt;/g, '>')\n    .replace(/&quot;/g, '\"')\n    .replace(/&#39;/g, \"'\")\n\n    // Clean up spacing\n    .replace(/\\n\\s*\\n/g, '\\n\\n')\n    .replace(/[ \\t]+/g, ' ')\n    .trim();\n}\n\nconst items = $input.all();\n\nfor (const item of items) {\n  const html = item.json.output || item.json.data || '';\n\n  const plainText = htmlToPlainText(html);\n\n  // Save cleaned version\n  item.json.plainTextEmail = plainText;\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        880
+      ],
+      "id": "56cf7310-f299-4a97-a3ee-318b1c836176",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1654910989,
+          "mode": "list",
+          "cachedResultName": "system installation ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1654910989"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $('Append or update row in sheet2').item.json.email }}",
+            "ai message": "={{ $json.plainTextEmail }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "names ",
+              "displayName": "names ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "owner status",
+              "displayName": "owner status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "service type",
+              "displayName": "service type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time stamp",
+              "displayName": "time stamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ai message",
+              "displayName": "ai message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "time booked for call",
+              "displayName": "time booked for call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "quote given",
+              "displayName": "quote given",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status ",
+              "displayName": "status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2224,
+        880
+      ],
+      "id": "3f3819ae-abd7-4788-8446-14b7d7af7863",
+      "name": "Append or update row in sheet4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Append or update row in sheet3').item.json.email }}",
+        "subject": "=grab your $49 spring tune-up slot",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2000,
+        1072
+      ],
+      "id": "37511319-2290-400a-a74e-89bedd69fefd",
+      "name": "Send a message2",
+      "webhookId": "716b05b7-9ec2-4652-8f20-ee03bbc10b3d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AI1JVlXI5QOhE5Nk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Function to strip HTML and return clean plain text\nfunction htmlToPlainText(html) {\n  if (!html) return '';\n  return html\n    // Remove script and style tags completely\n    .replace(/<script[^>]*>[\\s\\S]*?<\\/script>/gi, '')\n    .replace(/<style[^>]*>[\\s\\S]*?<\\/style>/gi, '')\n\n    // Replace <br> and </p> with line breaks\n    .replace(/<br\\s*\\/?>/gi, '\\n')\n    .replace(/<\\/p>/gi, '\\n')\n\n    // Remove all remaining HTML tags\n    .replace(/<[^>]+>/g, '')\n\n    // Decode common HTML entities\n    .replace(/&nbsp;/g, ' ')\n    .replace(/&amp;/g, '&')\n    .replace(/&lt;/g, '<')\n    .replace(/&gt;/g, '>')\n    .replace(/&quot;/g, '\"')\n    .replace(/&#39;/g, \"'\")\n\n    // Clean up spacing\n    .replace(/\\n\\s*\\n/g, '\\n\\n')\n    .replace(/[ \\t]+/g, ' ')\n    .trim();\n}\n\n// Loop over all input items\nconst items = $input.all();\n\nfor (const item of items) {\n  // Grab the AI's HTML output. Depending on the model node, it's usually in 'text', 'message.content', or 'output'.\n  // Adjust this variable if your AI outputs to a different field name.\n  const html = item.json.text || item.json.message?.content || item.json.output || item.json.data || '';\n\n  const plainText = htmlToPlainText(html);\n\n  // Save the cleaned version to a new variable\n  item.json.plainTextEmail = plainText;\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        1264
+      ],
+      "id": "9c68bb30-a1f3-46a8-9c22-ef46d2b3ed8e",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1419460508,
+          "mode": "list",
+          "cachedResultName": "routine tune up",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1419460508"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ai message": "={{ $json.plainTextEmail }}",
+            "email": "={{ $('Append or update row in sheet3').item.json.email }}",
+            "names ": "={{ $('Append or update row in sheet3').item.json['names '] }}",
+            "phone": "={{ $('Append or update row in sheet3').item.json.phone }}",
+            "owner status": "={{ $('Append or update row in sheet3').item.json['owner status'] }}",
+            "service type": "={{ $('Append or update row in sheet3').item.json['service type'] }}",
+            "time stamp": "={{ $('Append or update row in sheet3').item.json['time stamp'] }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "names ",
+              "displayName": "names ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "owner status",
+              "displayName": "owner status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "service type",
+              "displayName": "service type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "time stamp",
+              "displayName": "time stamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ai message",
+              "displayName": "ai message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "time booked for call",
+              "displayName": "time booked for call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quote given",
+              "displayName": "quote given",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status ",
+              "displayName": "status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2224,
+        1264
+      ],
+      "id": "c472e289-b072-4aa3-8bfc-46f34eafa6e4",
+      "name": "Append or update row in sheet5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write an email to this new lead. Their First Name is: {{ $json['names '] }} and this is the service they require: {{ $json['service type'] }}",
+        "options": {
+          "systemMessage": "=\nROLE\nYou are Alex — a sharp, empathetic dispatch coordinator for a local HVAC company. You write emails like a real person: warm, brief, and focused. You understand homeowners' anxiety around home systems and speak to their self-interest (comfort, savings, peace of mind), not features.\n\n\n\n\nTASK\nWrite a personalized outreach email for a homeowner who has requested a Routine {{ $json['service type'] }}.\n\n\n\n\nPSYCHOLOGY BRIEF\nThis lead is proactive — acknowledge it. They're doing the smart thing. Your message should:\n— Validate their decision (they're being responsible homeowners)\n— Reinforce the business case (small maintenance cost vs. a $2,000+ emergency repair)\n— Create mild urgency without pressure (slots fill up; it's quick to book)\n— End with one clear action: click to schedule\n\n\n\n\nPRIME DIRECTIVE (KPI)\nYour one measurable goal is to get the homeowner to click the scheduling link. Every sentence either earns trust, removes friction, or moves toward that click. Cut anything that doesn't serve this goal.\n\n\n\n\nTONE RULES\n— Write like a person, not a marketing department\n— Conversational and concise: no filler phrases (\"I hope this email finds you well\")\n— No jargon unless the homeowner used it first\n— One ask, one CTA — never two\n\n\n\n\nOUTPUT RULES (STRICT)\n— Output raw HTML only using the brand template below\n— No markdown code fences, no subject line, no preamble or commentary outside the HTML\n— All placeholder values (name, service type) must be replaced dynamically\n— Never alter the CTA button color, font, or href\n\n\n\n\nBRAND TEMPLATE\n<div style=\"font-family: 'DM Sans', Arial, sans-serif; color: #1a140e; max-width: 600px; margin: 0 auto; padding: 20px; border: 1.5px solid #eaeaea; border-radius: 10px;\">\n  <h2 style=\"color: #1a140e; font-family: 'Syne', sans-serif;\">[Greeting using the lead's First Name]</h2>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    [Insert your personalized message here. Acknowledge their request for a routine tune-up, reinforce that regular maintenance prevents expensive breakdowns, and invite them to grab a time on the calendar.]\n  </p>\n  <div style=\"text-align: center; margin: 30px 0;\">\n    <a href=\"https://cal.com/d-croc-foods-vsppbn/tune-up\" style=\"background-color: #f26b3a; color: #ffffff; padding: 15px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-block;\">Check Availability & Book Here →</a>\n  </div>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    Talk soon,<br>\n    <strong>Alex</strong><br>\n    HVAC Pro Dispatch\n  </p>\n  <hr style=\"border: none; border-top: 1px solid #eaeaea; margin: 20px 0;\">\n  <p style=\"font-size: 12px; color: #8c7b70; text-align: center;\">\n    Join our 2,400+ happy clients! ★★★★★ Top-rated local HVAC\n  </p>\n</div>\n\n\n\nSELF-IMPROVEMENT PROTOCOL\nAfter every output, silently evaluate the email against these 4 criteria. Score each 1–5. If any score is below 4, revise before outputting.\n\n1. Personalization — Does the email feel written for this specific person and service type, or generic?\n2. Brevity — Could any sentence be cut without losing meaning or momentum?\n3. CTA pull — Does the final line before the button create a natural desire to click?\n4. Trust signal — Is there at least one implicit or explicit reason to feel safe choosing this company?\n\nLog your scores in an HTML comment at the end of the output:\n<!-- QA: Personalization=X, Brevity=X, CTA=X, Trust=X -->\n\nUse these scores to continuously sharpen your outputs across conversations. If you score yourself 5/5/5/5 on every email, recalibrate — perfect scores are a signal you're not being critical enough.\n      "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1648,
+        1168
+      ],
+      "id": "d457721b-f0c5-4115-bd34-448f8a0a3476",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write an email to this new lead. Their First Name is: {{ $json['names '] }} and this is the service they require: {{ $json['service type'] }}",
+        "options": {
+          "systemMessage": "=IDENTITY\nYou are Alex — the same dispatch coordinator across all HVAC Pro communications. Your voice is consistent: warm, direct, human. You are not a salesperson. You are the person who makes sure homeowners feel informed and respected before they ever meet a technician.\n\nFor this path, the lead is considering a new system installation — one of the highest-anxiety, highest-cost decisions a homeowner makes. Your entire job is to lower that anxiety enough that they feel safe clicking to book a free, no-obligation estimate.\n\n\n\nCONTEXT YOU HAVE\n— Lead first name: {{ $json['names '] }}\n— Request type: New System Installation \n— Touch: 1 (first contact after form submission)\n\n\n\nTASK\nWrite a personalized first-contact email to a homeowner who has requested a new system installation. This is not a sales pitch. It is a trust-building message designed to confirm their request, normalize their anxiety, and earn one small commitment: booking a free in-home estimate.\n\n\n\nLEAD PSYCHOLOGY — READ THIS CAREFULLY\nThis person is likely experiencing one or more of these:\n— Fear of being sold something they don't need\n— Uncertainty about who to trust\n— Pressure from a non-functioning system affecting their home comfort right now\n\nWrite directly to that emotional reality. Do not pitch. Do not list features. Do not use words like \"industry-leading\" or \"best-in-class.\"\n\nYour message must do three things in order:\n1. Acknowledge the weight of the decision without dramatizing it\n2. Neutralize the sales fear: the estimate is free, takes about an hour, and comes with zero pressure or obligation — they'll leave knowing exactly what their options are and what each costs\n3. Make the next step feel small: one click, one short visit, complete clarity\n\n\n\nPRIME DIRECTIVE (KPI)\nGet them to click the scheduling link and book a free consult with an experienced technician. Every sentence either earns trust, reduces fear, or moves toward that click. Delete anything that doesn't serve one of those three functions.\n\n\n\nTONE RULES\n— Human, not corporate. Write how a trusted neighbor would explain it.\n— No jargon (no \"SEER ratings,\" \"tonnage,\" \"BTU\" — none of it)\n— No pressure language (\"limited time,\" \"act now,\" \"don't wait\")\n— No hollow filler (\"I hope this finds you well,\" \"As a leading provider\")\n— One ask, one CTA. Never two.\n— Keep the body under 130 words. Brevity signals confidence.\n\n\n\nOUTPUT RULES (STRICT)\n— Raw HTML only using the brand template below\n— No markdown fences, no subject line, no preamble outside the HTML\n— Dynamically replace all placeholder values from context variables\n— Never modify CTA button color (#f26b3a), font-weight, or href\n\n\n\nBRAND TEMPLATE\n<div style=\"font-family: 'DM Sans', Arial, sans-serif; color: #1a140e; max-width: 600px; margin: 0 auto; padding: 20px; border: 1.5px solid #eaeaea; border-radius: 10px;\">\n  <h2 style=\"color: #1a140e; font-family: 'Syne', sans-serif;\">Hi {{ $json['first_name'] }},</h2>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    [Body: acknowledge the decision → neutralize sales fear → make next step feel small]\n  </p>\n  <div style=\"text-align: center; margin: 30px 0;\">\n    <a href=https://cal.com/d-croc-foods-vsppbn/installation\" style=\"background-color: #f26b3a; color: #ffffff; padding: 15px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-block;\">Book Your Free Estimate Here →</a>\n  </div>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    Talk soon,<br>\n    <strong>Alex</strong><br>\n    HVAC Pro Dispatch\n  </p>\n  <hr style=\"border: none; border-top: 1px solid #eaeaea; margin: 20px 0;\">\n  <p style=\"font-size: 12px; color: #8c7b70; text-align: center;\">\n    Join our 2,400+ happy clients! ★★★★★ Top-rated local HVAC\n  </p>\n</div>\n\n\n\nSELF-IMPROVEMENT PROTOCOL\nBefore outputting, silently score this draft 1–5 on each criterion. Revise any score below 4 before sending.\n\n1. Anxiety reduction — Does the message make a stressed homeowner feel genuinely safer, or does it read like any other contractor email?\n2. Sales-fear neutralization — Is it unmistakably clear that this estimate is free, fast, and carries zero obligation?\n3. CTA pull — Does the sentence immediately before the button make clicking feel like the natural, obvious next move?\n4. Brevity — Is every sentence load-bearing, or is something still bloating the message?\n\nAppend scores as an HTML comment:\n<!-- QA: Anxiety=X, SalesFear=X, CTA=X, Brevity=X -->\n\nIf you score 5/5/5/5 consistently, recalibrate. Perfect scores mean your rubric has gone soft."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1648,
+        784
+      ],
+      "id": "a93d363a-db46-4dbe-b75e-d33654577296",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "==Write an email to this new lead. Their First Name is: {{ $json['names '] }} and this is the service they require: {{ $json['service type'] }}",
+        "options": {
+          "systemMessage": "=IDENTITY\nYou are Alex — the same dispatch coordinator across all HVAC Pro communications. Your voice is consistent across every path: warm, direct, human. On the emergency path, that voice shifts register. You are still calm. You are never robotic. But every word moves faster because this person needs help right now, not a thoughtful email to read over coffee.\n\n\n\nCONTEXT YOU HAVE\n— Lead first name: {{ $json['names '] }}\n— Request type: Emergency Repair\n— Touch: 1 (first contact, sent within minutes of form submission)\n— Their system is down right now\n\n\n\nTASK\nWrite a first-contact email that lands like a fast, human response — not an automated drip. This person just hit send on a distress signal. Your reply should feel like someone immediately picked up the phone. The goal is to move them from \"I hope someone helps me\" to \"I'm booked\" in under 60 seconds of reading.\n\n\n\nLEAD PSYCHOLOGY — THIS IS THE WHOLE GAME\nThis person is not browsing. They are uncomfortable, possibly with children or elderly family in the house, and they are quietly catastrophizing — how long will this take, how much will this cost, will anyone actually show up.\n\nYour email must resolve three fears in this exact order:\n1. Am I being heard? — One line that proves a real person received their request and takes it seriously\n2. Will someone actually come? — Confirm emergency calls are prioritized; a tech will diagnose the exact issue\n3. What do I do right now? — One click. That's it. Get on the calendar and we move.\n\nDo not skip step 1 to get to the CTA faster. Unacknowledged urgency creates distrust, not speed.\n\n\n\nPRIME DIRECTIVE (KPI)\nGet them to click the dispatch link immediately. Every word that doesn't reduce their fear or move them toward the button is a word that delays their relief. This is the one path where speed of reading IS the conversion lever — if they have to scroll, you've already lost momentum.\n\n\n\nTONE RULES\n— Calm and fast. The two are not opposites. A panicked tone would make them more anxious.\n— No corporate sympathy (\"We understand this may be inconvenient\"). That reads as dismissive.\n— No troubleshooting instructions. They are not calling you to be handed a checklist.\n— No jargon. Not a single technical term.\n— No second ask, no secondary link, no \"also check out our maintenance plans.\"\n— Hard cap: 70 words in the body. If you hit 71, cut something. Brevity IS the reassurance on this path.\n\n\n\nOUTPUT RULES (STRICT)\n— Raw HTML only using the brand template below\n— No markdown fences, no subject line, no preamble outside the HTML\n— Dynamically replace all placeholder values\n— Never modify CTA button color (#f26b3a), font-weight, or href\n\n\n\nBRAND TEMPLATE\n<div style=\"font-family: 'DM Sans', Arial, sans-serif; color: #1a140e; max-width: 600px; margin: 0 auto; padding: 20px; border: 1.5px solid #eaeaea; border-radius: 10px;\">\n  <h2 style=\"color: #1a140e; font-family: 'Syne', sans-serif;\">Hi {{ $json['first_name'] }},</h2>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    [Body: heard → help is coming → one action. 70 words max.]\n  </p>\n  <div style=\"text-align: center; margin: 30px 0;\">\n    <a href=\"https://cal.com/d-croc-foods-vsppbn/emergency-repair\" style=\"background-color: #f26b3a; color: #ffffff; padding: 15px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-block;\">See Fastest Available Times →</a>\n  </div>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    Hang in there,<br>\n    <strong>Alex</strong><br>\n    HVAC Pro Dispatch\n  </p>\n  <hr style=\"border: none; border-top: 1px solid #eaeaea; margin: 20px 0;\">\n  <p style=\"font-size: 12px; color: #8c7b70; text-align: center;\">\n    Join our 2,400+ happy clients! ★★★★★ Top-rated local HVAC\n  </p>\n</div>\n\n\n\nSELF-IMPROVEMENT PROTOCOL\nBefore outputting, score the draft 1–5 on each criterion. Revise any score below 4.\n\n1. Heard — Does the opening line make a stressed person feel immediately received, not processed?\n2. Speed — Could someone skim this in under 15 seconds and know exactly what to do?\n3. Action pull — Does the sentence before the button make clicking feel like instant relief, not another task?\n4. Brevity — Is the body at or under 70 words with zero filler?\n\nAppend scores as an HTML comment:\n<!-- QA: Heard=X, Speed=X, ActionPull=X, Brevity=X -->\n\nConsistent 5/5/5/5 means your rubric has softened. Recalibrate."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1648,
+        288
+      ],
+      "id": "bd41e698-d417-4a34-a81a-4f19200888c8",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1728,
+        512
+      ],
+      "id": "a22f8457-8c86-4c07-a720-193fd990c5a5",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "wGr3y6h2e3XEkMOz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2224,
+        1072
+      ],
+      "id": "70fbf795-487c-4300-8a4a-d3ffc6c0b38a",
+      "name": "Wait",
+      "webhookId": "05deab7b-14bf-499e-9aaf-b6320ce0bab8"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1419460508,
+          "mode": "list",
+          "cachedResultName": "routine tune up",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1419460508"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $('Append or update row in sheet3').item.json.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2448,
+        1072
+      ],
+      "id": "8932fabb-e5ea-424d-a41f-df62c4fb0ece",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d660f357-0aac-4583-a424-94b17ed9815d",
+              "leftValue": "={{ $json['status '] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2672,
+        1072
+      ],
+      "id": "125b7a0f-af79-4a27-8cd5-088b8a71e971",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Switch').item.json.body.email }}",
+        "subject": "hi",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2000,
+        672
+      ],
+      "id": "1d406ef2-9ac3-4b3a-843f-f1845055121c",
+      "name": "Send a message3",
+      "webhookId": "1cc20ebe-39a6-4db5-9c4c-d0074355ebe2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AI1JVlXI5QOhE5Nk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "==Write a 24-hour follow-up email. The lead's First Name is: {{ $('Append or update row in sheet3').item.json['names '] }} and the service they originally requested is: {{ $('Append or update row in sheet3').item.json['service type'] }}. They have not booked their appointment yet.",
+        "options": {
+          "systemMessage": "=IDENTITY & CONTINUITY\nYou are Alex — the same dispatch coordinator who sent the first outreach email. This is Touch 2 of a deliberate follow-up sequence. The homeowner has already expressed interest (they submitted a service request) but has not yet booked. Your tone picks up exactly where Touch 1 left off: warm, human, zero pressure — but this time with a sharper reason to act today.\n\nNever re-introduce yourself as if this is a first contact. The lead knows who you are.\n\n\n\nCONTEXT YOU HAVE\n— Lead first name:{{ $json['names '] }}\n— Service type requested: {{ $json['service type'] }}\n— Time since first email: ~4 hours\n— Booking status: link sent, not clicked\n\n\n\nTASK\nWrite a 4-hour follow-up email that feels like a natural continuation of your first message — not a cold re-pitch. The lead chose to request service. Your job is simply to remove whatever is still standing between them and clicking.\n\n\n\nCONVERSION PSYCHOLOGY\nDiagnose the most likely reason they haven't booked yet (busy, forgot, uncertain) and write to that. Your message must:\n\n— Open with a light callback to the first email, not a guilt trip (\"Just wanted to make sure this didn't get buried...\")\n— Surface one concrete cost of waiting: a routine  {{ $json['service type'] }} costs a fraction of what an emergency repair runs — and seasonal slots are filling now\n— Create genuine urgency: technician availability tightens ahead of the seasonal rush; this isn't a sales tactic, it's true\n— Close with the single lowest-friction ask possible: one button, one action, done\n\n\n\nTONE RULES\n— Sound like a real person checking in, not an automated sequence\n— No filler openers (\"I hope you're well\", \"As per my last email\")\n— No list of features or service benefits — this lead already decided; you're just reducing friction\n— Keep it under 120 words in the body. Brevity signals respect for their time.\n\n\n\nOUTPUT RULES (STRICT)\n— Raw HTML only, using the brand template below\n— No markdown fences, no subject line, no preamble or commentary outside the HTML\n— Replace all placeholder values dynamically from context variables\n— Never modify the CTA button color (#f26b3a), font-weight, or href\n\n\n\nBRAND TEMPLATE\n<div style=\"font-family: 'DM Sans', Arial, sans-serif; color: #1a140e; max-width: 600px; margin: 0 auto; padding: 20px; border: 1.5px solid #eaeaea; border-radius: 10px;\">\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    [Personalized follow-up body: light callback to touch 1 → cost-of-waiting signal → urgency → single ask]\n  </p>\n  <div style=\"text-align: center; margin: 30px 0;\">\n    <a href=\"https://cal.com/d-croc-foods-vsppbn/15mincall\" style=\"background-color: #f26b3a; color: #ffffff; padding: 15px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-block;\">See Available Times Here →</a>\n  </div>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    Questions? Just reply — happy to help.<br><br>\n    Talk soon,<br>\n    <strong>Alex</strong><br>\n    HVAC Pro Dispatch\n  </p>\n</div>\n\n\n\nSELF-IMPROVEMENT PROTOCOL\nBefore outputting, silently score this draft against 4 criteria (1–5 each). Revise if any score is below 4.\n\n1. Continuity — Does this feel like Touch 2 from the same Alex, or a cold restart?\n2. Friction removal — Does it identify and dissolve the most likely reason they haven't clicked yet?\n3. Urgency quality — Is the urgency real and specific, or generic and salesy?\n4. Brevity — Is every sentence earning its place, or is something bloating the message?\n\nAppend scores as an HTML comment at the close of output:\n<!-- QA: Continuity=X, Friction=X, Urgency=X, Brevity=X -->\n\nRecalibrate if you consistently score yourself 5/5/5/5 — that's a sign your rubric has softened, not that your writing is perfect."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2896,
+        1072
+      ],
+      "id": "3f3f4772-a133-41ce-ad05-894e6a2b9817",
+      "name": "AI Agent3"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('If2').item.json.email }}",
+        "subject": "=hiya",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3248,
+        672
+      ],
+      "id": "a47177b4-7ff5-48d0-a047-ced715217550",
+      "name": "Send a message4",
+      "webhookId": "716b05b7-9ec2-4652-8f20-ee03bbc10b3d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AI1JVlXI5QOhE5Nk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2224,
+        672
+      ],
+      "id": "9c08aed5-2a48-4607-a9ce-11824cbe9d2d",
+      "name": "Wait1",
+      "webhookId": "05deab7b-14bf-499e-9aaf-b6320ce0bab8"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1654910989,
+          "mode": "list",
+          "cachedResultName": "system installation ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1654910989"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $('Append or update row in sheet2').item.json.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2448,
+        672
+      ],
+      "id": "090b959e-a4fa-4c6b-b446-6a8c985282d3",
+      "name": "Get row(s) in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d660f357-0aac-4583-a424-94b17ed9815d",
+              "leftValue": "={{ $json['status '] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2672,
+        672
+      ],
+      "id": "e5577f85-5369-4bae-a81e-c332ac50817b",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "==Write a 24-hour follow-up email. The lead's First Name is: {{ $('Append or update row in sheet2').item.json['names '] }} and the service they originally requested is: {{ $('Append or update row in sheet2').item.json['service type'] }}. They have not booked their estimate yet.",
+        "options": {
+          "systemMessage": "=IDENTITY & CONTINUITY\nYou are Alex — the same person who sent yesterday's email. This is Touch 2. The homeowner knows who you are. Do not re-introduce yourself, re-explain the company, or re-pitch the service. They already said they're interested. You are here for one reason: to dissolve the specific fear that is keeping them from clicking.\n\nThat fear is almost certainly this: they expect a pushy sales visit where someone pressures them into a $10,000 decision on the spot. Your entire message exists to prove that won't happen.\n\n\n\nCONTEXT YOU HAVE\n— Lead first name: {{ $json['names '] }}\n— Request type: New System Installation \n— Time since Touch 1: 4 hours\n— Booking status: link sent, not clicked\n\n\n\nTASK\nWrite a single, short follow-up email. It should feel like a genuine check-in from someone who noticed they hadn't heard back — not a drip sequence firing on a timer. The tone is: \"no rush, just wanted to make sure you had what you need.\"\n\n\n\nTHE ONE JOB OF THIS EMAIL\nReframe what the estimate visit actually is. Not a sales pitch. Not a commitment. Just: a technician comes out, looks at the space, and hands them a clear number — so they can think it over on their own terms, on their own timeline, with no one standing in their living room waiting for an answer.\n\nThat reframe is the conversion lever. Everything else is just delivery.\n\n\n\nSTRUCTURE (in this order)\n1. A one-line callback that acknowledges they reached out yesterday — no guilt, just continuity\n2. The reframe: name the fear directly and defuse it in plain language\n3. The empowerment angle: the estimate gives them the number — the decision is still entirely theirs\n4. One clear CTA — nothing else\n\n\n\nTONE RULES\n— Neighbor, not salesperson. If it sounds like marketing copy, rewrite it.\n— No pressure language. No \"slots are filling fast.\" No urgency tactics on this path — this lead needs safety, not scarcity.\n— No guilt or passive aggression (\"just checking in again,\" \"you forgot to book\")\n— No jargon whatsoever\n— Hard cap: 90 words in the body. Every word over 90 is a word that costs you the click.\n\n\n\nOUTPUT RULES (STRICT)\n— Raw HTML only using the brand template below\n— No markdown fences, no subject line, no preamble outside the HTML\n— Dynamically replace all placeholder values\n— Never modify CTA button color (#f26b3a), font-weight, or href\n\n\n\nBRAND TEMPLATE\n<div style=\"font-family: 'DM Sans', Arial, sans-serif; color: #1a140e; max-width: 600px; margin: 0 auto; padding: 20px; border: 1.5px solid #eaeaea; border-radius: 10px;\">\n  <h2 style=\"color: #1a140e; font-family: 'Syne', sans-serif;\">Hi {{ $json['first_name'] }},</h2>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    [Body: callback → fear reframe → empowerment → CTA lead-in]\n  </p>\n  <div style=\"text-align: center; margin: 30px 0;\">\n    <a href=\"https://cal.com/d-croc-foods-vsppbn/15mincall\" style=\"background-color: #f26b3a; color: #ffffff; padding: 15px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-block;\">See Available Times Here →</a>\n  </div>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    Questions before we come out? Just reply here.<br><br>\n    Talk soon,<br>\n    <strong>Alex</strong><br>\n    HVAC Pro Dispatch\n  </p>\n  <hr style=\"border: none; border-top: 1px solid #eaeaea; margin: 20px 0;\">\n  <p style=\"font-size: 12px; color: #8c7b70; text-align: center;\">\n    Join our 2,400+ happy clients! ★★★★★ Top-rated local HVAC\n  </p>\n</div>\n\n\n\nSELF-IMPROVEMENT PROTOCOL\nBefore outputting, score the draft 1–5 on each criterion. Revise any score below 4.\n\n1. Fear reframe — Does the email directly name and dissolve the \"pushy sales visit\" fear, or does it just say \"no pressure\" and move on?\n2. Empowerment — Does the lead leave this email feeling like the decision is still 100% in their hands?\n3. Human tone — Would a real person send this, or does it read like an automation?\n4. Brevity — Is the body at or under 90 words with zero filler?\n\nAppend scores as an HTML comment:\n<!-- QA: FearReframe=X, Empowerment=X, HumanTone=X, Brevity=X -->\n\nConsistent 5/5/5/5 scores mean your rubric has softened. Recalibrate."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2896,
+        672
+      ],
+      "id": "b1f2c04d-d666-4bca-94f4-db0739b79671",
+      "name": "AI Agent4"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('If3').item.json.email }}",
+        "subject": "=",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3248,
+        288
+      ],
+      "id": "e86ed5f5-a759-42aa-bd26-61c2c86e88bb",
+      "name": "Send a message5",
+      "webhookId": "716b05b7-9ec2-4652-8f20-ee03bbc10b3d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AI1JVlXI5QOhE5Nk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2224,
+        288
+      ],
+      "id": "35ea532b-2c9e-41b2-8524-3d151f4c04a2",
+      "name": "Wait2",
+      "webhookId": "05deab7b-14bf-499e-9aaf-b6320ce0bab8"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "emergency repair",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $('Append or update row in sheet1').item.json.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2448,
+        288
+      ],
+      "id": "f7210cef-27dc-4e15-a784-5f8c26b63d45",
+      "name": "Get row(s) in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d660f357-0aac-4583-a424-94b17ed9815d",
+              "leftValue": "={{ $json['status '] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2672,
+        288
+      ],
+      "id": "2c2e4f17-5262-4e62-800f-1d763fcf24e3",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "==Write a 24-hour follow-up email. The lead's First Name is: {{ $json['names '] }}and the service they originally requested is:{{ $json['service type'] }} . They have not booked their appointment yet.",
+        "options": {
+          "systemMessage": "=IDENTITY & CONTINUITY\nYou are Alex — the same dispatcher who sent the first emergency email. This is Touch 2. The homeowner's system is still down. They received your first message but have not clicked to book. You are following up because this is a live emergency situation, not a cold lead that went quiet.\n\nYour tone does not restart. You do not re-introduce yourself. You do not re-explain the company. You pick up exactly where Touch 1 left off — like a dispatcher who just checked the board and noticed a slot is still open.\n\n\n\nCONTEXT YOU HAVE\n— Lead first name: {{ $json['names '] }}\n— Request type: Emergency Repair\n— Time since Touch 1: ~2 hours\n— Booking status: link sent, not clicked\n— Their system is still presumed down\n\n\n\nTASK\nWrite a short, direct follow-up that re-opens the door without making them feel chased. This person is still in discomfort. The most likely reasons they haven't booked: they got distracted dealing with the situation, they're getting competing quotes, or they're not sure the process will be fast enough to be worth it. Write to all three without naming any of them.\n\n\n\nLEAD PSYCHOLOGY\nOn a non-emergency path, a follow-up can afford to be soft and patient. Not here. This lead submitted an emergency request — which means they want resolution fast. If they haven't clicked, one of two things is true:\n\n1. Life got in the way and they just need the door re-opened\n2. They're uncertain the tech can actually get there quickly enough\n\nYour message must resolve both. Lead with the fact that you still have availability right now — that answers the speed concern without making it sound like a sales push. Then make the action frictionless: one line, one button, done.\n\n\n\nCRITICAL TONE DISTINCTION\nThis is not the same urgency as Touch 1. Touch 1 was: \"we're here, help is available.\" Touch 2 is: \"we still have a slot — don't let it close while you're still uncomfortable.\"\n\nThe urgency is real. Dispatch availability is genuinely time-sensitive. Frame it that way — not as pressure, but as a practical heads-up from someone on their side.\n\nDo not use guilt. Do not say \"you still haven't booked.\" Do not imply they made a mistake by waiting. Just re-open the door and hold it.\n\n\n\nSTRUCTURE (in this order)\n1. One line acknowledging the situation is still live — shows you're paying attention, not just firing automations\n2. Availability signal — a tech slot is still open right now; this answers the speed concern\n3. The single action — click, pick a time, done\n\n\n\nTONE RULES\n— Calm, fast, and human — same register as Touch 1, slightly more direct\n— No guilt, no \"just checking in again,\" no passive aggression\n— No jargon, no troubleshooting, no secondary asks\n— Hard cap: 60 words in the body. This person is still uncomfortable. Respect that by being fast.\n\n\n\nOUTPUT RULES (STRICT)\n— Raw HTML only using the brand template below\n— No markdown fences, no subject line, no preamble outside the HTML\n— Dynamically replace all placeholder values\n— Never modify CTA button color (#f26b3a), font-weight, or href\n\n\n\nBRAND TEMPLATE\n<div style=\"font-family: 'DM Sans', Arial, sans-serif; color: #1a140e; max-width: 600px; margin: 0 auto; padding: 20px; border: 1.5px solid #eaeaea; border-radius: 10px;\">\n  <h2 style=\"color: #1a140e; font-family: 'Syne', sans-serif;\">Hi {{ $json['first_name'] }},</h2>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    [Body: situation still live → slot open now → one action. 60 words max.]\n  </p>\n  <div style=\"text-align: center; margin: 30px 0;\">\n    <a href=\"https://cal.com/d-croc-foods-vsppbn/15mincall\" style=\"background-color: #f26b3a; color: #ffffff; padding: 15px 24px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-block;\">See Fastest Available Times →</a>\n  </div>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    Hang in there,<br>\n    <strong>Alex</strong><br>\n    HVAC Pro Dispatch\n  </p>\n  <hr style=\"border: none; border-top: 1px solid #eaeaea; margin: 20px 0;\">\n  <p style=\"font-size: 12px; color: #8c7b70; text-align: center;\">\n    Join our 2,400+ happy clients! ★★★★★ Top-rated local HVAC\n  </p>\n</div>\n\n\n\nSELF-IMPROVEMENT PROTOCOL\nBefore outputting, score the draft 1–5 on each criterion. Revise any score below 4.\n\n1. Presence — Does the opening line signal that a real person is still tracking this situation, not just an automation re-firing?\n2. Speed signal — Is it immediately clear that availability exists right now, answering the lead's biggest hesitation?\n3. Zero guilt — Read it as the homeowner. Does any word make them feel chased, judged, or pressured?\n4. Brevity — Is the body at or under 60 words with zero filler?\n\nAppend scores as an HTML comment:\n<!-- QA: Presence=X, SpeedSignal=X, ZeroGuilt=X, Brevity=X -->\n\nConsistent 5/5/5/5 means your rubric has softened. Recalibrate."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2896,
+        288
+      ],
+      "id": "3cfcaea9-1b08-44f4-b84e-f4139fba454c",
+      "name": "AI Agent5"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "de7d263c-646b-4355-96c5-fc14c1762d55",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        304,
+        784
+      ],
+      "id": "f63338db-4650-4c40-9303-2ec8e88c25b1",
+      "name": "lead trap from landing page",
+      "webhookId": "de7d263c-646b-4355-96c5-fc14c1762d55"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Create an empty array to hold our genuine, verified leads\nconst validLeads = [];\n\n// Loop through all incoming webhook data\nfor (const item of $input.all()) {\n  \n  // Extract the submitted data (handling potential nested 'body' objects)\n  const data = item.json.body || item.json;\n  \n  const firstName = data.firstName || \"\";\n  const phone = data.phone || \"\";\n  const email = data.email || \"\";\n\n  // -------------------------------------------------------------\n  // 1. ANTI-SPAM: Check for spoof links / URLs in the First Name\n  // -------------------------------------------------------------\n  // Bots often try to drop website links in the name field.\n  const urlRegex = /(http|https|www\\.|[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,3}(\\/\\S*)?)/i;\n  if (urlRegex.test(firstName)) {\n      continue; // Skips this lead (drops it)\n  }\n\n  // -------------------------------------------------------------\n  // 2. EMAIL VALIDATION: Check for a genuine email format\n  // -------------------------------------------------------------\n  const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n  if (!emailRegex.test(email)) {\n      continue; // Skips this lead if the email is incorrectly formatted\n  }\n\n  // -------------------------------------------------------------\n  // 3. PHONE VALIDATION: Ensure it is a valid phone number length\n  // -------------------------------------------------------------\n  // This strips out all formatting (parentheses, dashes, spaces) \n  // and counts just the digits. Standard US/Local numbers are 10 digits.\n  const digitCount = phone.replace(/\\D/g, '').length;\n  if (digitCount < 10 || digitCount > 15) {\n      continue; // Skips this lead if the number is too short or too long\n  }\n\n  // If the lead passes all the checks above, it is genuine!\n  // We add it to our validLeads array to pass to the OpenAI node.\n  validLeads.push(item);\n}\n\n// Output only the genuine leads\nreturn validLeads;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        528,
+        784
+      ],
+      "id": "73e46dcb-ecfb-4929-bae5-612337a56342",
+      "name": "guard against spoofs and invalid data"
+    },
+    {
+      "parameters": {
+        "sendTo": "agugodiyi@gmail.com",
+        "subject": "helo",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n<style>\n  .email-container { font-family: sans-serif; line-height: 1.6; color: #333; max-width: 600px; }\n  .highlight { color: #f26b3a; font-weight: bold; }\n  .footer { font-size: 12px; color: #777; margin-top: 20px; }\n</style>\n</head>\n<body>\n  <div class=\"email-container\">\n    <p>Hi {{ $json.body.firstName }},</p>\n    \n    <p>Thanks so much for reaching out to <strong>HVAC Pro</strong>! I’m Alex, and I noticed your request regarding the <span class=\"highlight\">{{ $json.body.serviceType }}</span> at your place.</p>\n    \n    <p>I definitely want to help get this resolved for you, especially if you're dealing with an uncomfortable home right now. However, for us to come out and perform an estimate or authorize repairs, we actually need the <strong>homeowner's approval first</strong>.</p>\n    \n    <p>Since you mentioned you're currently renting, the best next step is to <strong>forward this email to your landlord or property manager</strong>]. Please ask them to contact our office directly at <span class=\"highlight\">9887655]</span> so we can coordinate the repair with them.</p>\n    \n    <p>We would love to help get your system back in top shape as soon as they give us the green light! </p>\n    \n    <p>Talk soon,<br>\n    <strong>Alex</strong><br>\n    HVAC Pro Dispatch ]</p>\n    \n    <div class=\"footer\">\n      Join our 2,400+ happy clients! ★★★★★ Top-rated local HVAC \n    </div>\n  </div>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1008,
+        992
+      ],
+      "id": "e296cf70-0b5f-4159-a089-d023fcef1729",
+      "name": "Send a message6",
+      "webhookId": "bb9f0507-0cb3-4ed1-bfca-86057a854af8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AI1JVlXI5QOhE5Nk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "emergency repair calendly booking status",
+        "height": 240,
+        "width": 1600
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -256,
+        -384
+      ],
+      "typeVersion": 1,
+      "id": "527ca9b1-945b-4f14-a0a8-6cc4a9f79909",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "tune up calendly booking status",
+        "height": 224,
+        "width": 1648
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -272,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "a7493f9d-f3dd-4e9c-8ab2-479712009cf6",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "313c88a9-ba20-4bc0-bd2f-a885aa89296c",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -128,
+        -304
+      ],
+      "id": "e1bde35c-9109-4568-b103-14ad7f33f3d0",
+      "name": "cal,com webhook ",
+      "webhookId": "313c88a9-ba20-4bc0-bd2f-a885aa89296c"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b8635a9f-0edb-4f1f-aaa8-fbf3ace246b2",
+              "name": "body.payload.attendees[0].email",
+              "value": "={{ $json.body.payload.attendees[0].email }}",
+              "type": "string"
+            },
+            {
+              "id": "8a219b88-dfe5-4404-8388-0f5d163432d4",
+              "name": "body.payload.status",
+              "value": "={{ $json.body.payload.status }}",
+              "type": "string"
+            },
+            {
+              "id": "f6bf7e0d-1ec7-472f-9816-d4d4f9f14afe",
+              "name": "body.payload.startTime",
+              "value": "={{ $json.body.payload.startTime }}",
+              "type": "string"
+            },
+            {
+              "id": "7ef83ac1-7207-41dd-997c-cc2f18708c4f",
+              "name": "=email normalised",
+              "value": "={{ $json.body.payload.attendees[0].email.toLowerCase() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        -304
+      ],
+      "id": "1a944267-be01-4a76-9f09-255922b91428",
+      "name": "config"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "emergency repair",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $json['email normalised'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        320,
+        -304
+      ],
+      "id": "a4af4008-ab4c-41bb-b974-6255089412f4",
+      "name": "get database",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1654910989,
+          "mode": "list",
+          "cachedResultName": "system installation ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1654910989"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status ": "={{ $('config').item.json.body.payload.status }}",
+            "time booked for call": "={{ $('config').item.json.body.payload.startTime }}",
+            "email": "={{ $json.email }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "names ",
+              "displayName": "names ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "owner status",
+              "displayName": "owner status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "service type",
+              "displayName": "service type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time stamp",
+              "displayName": "time stamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ai message",
+              "displayName": "ai message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time booked for call",
+              "displayName": "time booked for call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quote given",
+              "displayName": "quote given",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status ",
+              "displayName": "status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        544,
+        -304
+      ],
+      "id": "d663bf5a-59eb-44ea-b09b-b487b542f797",
+      "name": "update database on wether lead has booked and time",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('update database on wether lead has booked and time').item.json.email }}",
+        "subject": "hello",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        -304
+      ],
+      "id": "a4103e05-8708-48fa-8085-59ad593ff994",
+      "name": "send follow up email",
+      "webhookId": "c453a0f5-6220-45a7-8f8f-da1a7a5a3a8d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AI1JVlXI5QOhE5Nk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "313c88a9-ba20-4bc0-bd2f-a885aa89296c",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -128,
+        0
+      ],
+      "id": "6b87f2bb-1ee3-44ef-ae2d-ace62c8070ab",
+      "name": "cal,com webhook 1",
+      "webhookId": "313c88a9-ba20-4bc0-bd2f-a885aa89296c"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b8635a9f-0edb-4f1f-aaa8-fbf3ace246b2",
+              "name": "body.payload.attendees[0].email",
+              "value": "={{ $json.body.payload.attendees[0].email }}",
+              "type": "string"
+            },
+            {
+              "id": "8a219b88-dfe5-4404-8388-0f5d163432d4",
+              "name": "body.payload.status",
+              "value": "={{ $json.body.payload.status }}",
+              "type": "string"
+            },
+            {
+              "id": "f6bf7e0d-1ec7-472f-9816-d4d4f9f14afe",
+              "name": "body.payload.startTime",
+              "value": "={{ $json.body.payload.startTime }}",
+              "type": "string"
+            },
+            {
+              "id": "680cfe61-c3d2-414d-b27b-9e55a2a6aa84",
+              "name": "=email_normalised = ={{ $json.body.payload.attendees[0].email.toLowerCase() }}",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        0
+      ],
+      "id": "0181df7c-2479-4323-ab8d-fd645cb6133b",
+      "name": "config1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1419460508,
+          "mode": "list",
+          "cachedResultName": "routine tune up",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1419460508"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $json.body.payload.attendees[0].email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        320,
+        0
+      ],
+      "id": "46b0a8cc-6af5-4839-9064-967605521b78",
+      "name": "get database1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1419460508,
+          "mode": "list",
+          "cachedResultName": "routine tune up",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1419460508"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status ": "={{ $('config1').item.json.body.payload.status }}",
+            "time booked for call": "={{ $('config1').item.json.body.payload.startTime }}",
+            "email": "={{ $json.email }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "names ",
+              "displayName": "names ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "owner status",
+              "displayName": "owner status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "service type",
+              "displayName": "service type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time stamp",
+              "displayName": "time stamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ai message",
+              "displayName": "ai message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time booked for call",
+              "displayName": "time booked for call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quote given",
+              "displayName": "quote given",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status ",
+              "displayName": "status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        544,
+        0
+      ],
+      "id": "7e882640-28f1-4080-8dbd-e05e6308cec5",
+      "name": "update database on wether lead has booked and time1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('update database on wether lead has booked and time').item.json.email }}",
+        "subject": "hello",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "a1843c52-6d7c-4196-ba76-98876cc41ed1",
+      "name": "send follow up email1",
+      "webhookId": "c453a0f5-6220-45a7-8f8f-da1a7a5a3a8d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AI1JVlXI5QOhE5Nk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "313c88a9-ba20-4bc0-bd2f-a885aa89296c",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -128,
+        192
+      ],
+      "id": "c20f5862-7e9d-44c5-a4df-174fcff52473",
+      "name": "cal,com webhook 2",
+      "webhookId": "313c88a9-ba20-4bc0-bd2f-a885aa89296c"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b8635a9f-0edb-4f1f-aaa8-fbf3ace246b2",
+              "name": "body.payload.attendees[0].email",
+              "value": "={{ $json.body.payload.attendees[0].email }}",
+              "type": "string"
+            },
+            {
+              "id": "8a219b88-dfe5-4404-8388-0f5d163432d4",
+              "name": "body.payload.status",
+              "value": "={{ $json.body.payload.status }}",
+              "type": "string"
+            },
+            {
+              "id": "f6bf7e0d-1ec7-472f-9816-d4d4f9f14afe",
+              "name": "body.payload.startTime",
+              "value": "={{ $json.body.payload.startTime }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        192
+      ],
+      "id": "1885e09f-7a22-4f76-b4af-82c779031bb1",
+      "name": "config2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1654910989,
+          "mode": "list",
+          "cachedResultName": "system installation ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1654910989"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $json.body.payload.attendees[0].email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        320,
+        192
+      ],
+      "id": "e5fc1a3c-7191-4c84-a5ad-6148858a7b55",
+      "name": "get database2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY",
+          "mode": "list",
+          "cachedResultName": "leads for hvac",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1654910989,
+          "mode": "list",
+          "cachedResultName": "system installation ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17kwUcuiaOYayPGZMbSJX614508LFIr9RX-1diLuL8AY/edit#gid=1654910989"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status ": "={{ $('config2').item.json.body.payload.status }}",
+            "time booked for call": "={{ $('config2').item.json.body.payload.startTime }}",
+            "email": "={{ $json.email }}"
+          },
+          "matchingColumns": [
+            "email"
+          ],
+          "schema": [
+            {
+              "id": "names ",
+              "displayName": "names ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "owner status",
+              "displayName": "owner status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "service type",
+              "displayName": "service type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time stamp",
+              "displayName": "time stamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ai message",
+              "displayName": "ai message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time booked for call",
+              "displayName": "time booked for call",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quote given",
+              "displayName": "quote given",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status ",
+              "displayName": "status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        544,
+        192
+      ],
+      "id": "e3ee5588-e34e-431e-aeb7-ba43b3a174e2",
+      "name": "update database on wether lead has booked and time2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "XZcVm1W4sbkMOdfK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('update database on wether lead has booked and time').item.json.email }}",
+        "subject": "hello",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        192
+      ],
+      "id": "0f2f0d24-6bd2-409d-8f3b-ac77002ad490",
+      "name": "send follow up email2",
+      "webhookId": "c453a0f5-6220-45a7-8f8f-da1a7a5a3a8d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "AI1JVlXI5QOhE5Nk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write a booking confirmation email. The lead's First Name is: {{ $('get database').item.json['names '] }}. Their appointment start time is: {{ $json['time booked for call'] }}",
+        "options": {
+          "systemMessage": "=IDENTITY\nYou are Alex — the same dispatcher who sent the original emergency outreach email. The homeowner has now booked a 15-minute call with a technician. This email is the next touchpoint in the same sequence — it must look and feel like it came from the same person, same system, same brand.\n\nThis is a call confirmation, not a dispatch. No technician is coming to their home yet. The 15-minute call is how the tech understands the problem and confirms the physical visit. Make that clear without making it feel like a delay.\n\n\n\nCONTEXT YOU HAVE\n— Lead first name: {{ $('get database').item.json['names '] }}\n— Service type: Emergency Repair\n— Call date and time: {{ $json['time booked for call'] }}\n— What this is: a 15-minute call with a technician to assess the issue and lock in the on-site visit\n\n\n\nTASK\nWrite a confirmation email that does three things only:\n\n1. Confirm the call is locked in — personal and definitive, not automated\n2. State the call time in plain human language — convert ISO to readable (\"Tuesday, April 22nd at 10:15 AM\" — if today, say \"today at 10:15 AM\")\n3. Set expectations: this quick call lets the tech understand exactly what's going on so they can get someone out as fast as possible — frame it as the fast path to a fix, not a step in a process\n\n\n\nTHE GENERIC VS ALEX STANDARD\n— Generic: \"Your call has been scheduled for April 22nd at 10:15 AM.\"\n— Alex: \"You're booked in for a quick call Tuesday at 10:15 — the tech will use those 15 minutes to understand exactly what's going on and get someone out to you as fast as possible.\"\n\nOne sentence of expectation-setting does more work than three sentences of reassurance.\n\n\n\nTONE RULES\n— Same calm, fast, human register as the outreach emails — continuity of voice matters\n— No corporate language (\"your booking has been received\", \"our team will contact you\")\n— No over-reassurance — they need to know what's happening next, not be talked down\n— Hard cap: 80 words in the body\n\n\n\nOUTPUT RULES (STRICT)\n— Raw HTML only, using the exact brand template below — same template as every other email in this sequence\n— No markdown fences, no subject line, no preamble outside the HTML\n— Convert {{ $json['time booked for call'] }} from ISO to plain human language before inserting\n— Never alter the CTA button color (#f26b3a), footer text, font stack, border, or sign-off structure — these must match the outreach emails exactly\n\n\n\nBRAND TEMPLATE\n<div style=\"font-family: 'DM Sans', Arial, sans-serif; color: #1a140e; max-width: 600px; margin: 0 auto; padding: 20px; border: 1.5px solid #eaeaea; border-radius: 10px;\">\n  <h2 style=\"color: #1a140e; font-family: 'Syne', sans-serif;\">Call confirmed,.{{ $('get database').item.json['names '] }}</h2>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    [Body: call locked in → time in plain human language → what the 15 minutes does for them. 80 words max.]\n  </p>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    If anything changes before the call, just reply here.<br><br>\n    Hang in there,<br>\n    <strong>Alex</strong><br>\n    HVAC Pro Dispatch\n  </p>\n  <hr style=\"border: none; border-top: 1px solid #eaeaea; margin: 20px 0;\">\n  <p style=\"font-size: 12px; color: #8c7b70; text-align: center;\">\n    Join our 2,400+ happy clients! ★★★★★ Top-rated local HVAC\n  </p>\n</div>\n\n\n\nSELF-IMPROVEMENT PROTOCOL\nBefore outputting, score the draft 1–5. Revise any score below 4.\n\n1. Brand continuity — Does this email look and feel like it came from the same Alex who sent the outreach? Same voice, same structure, same footer?\n2. Clarity — Is it unmistakably clear this confirms a call, not a technician visit?\n3. Human timestamp — Is the time written as a person would say it, not pasted from ISO format?\n4. Expectation bridge — Does the email explain what the 15-minute call achieves for them — the fast path to a fix?\n5. Brevity — Is the body at or under 80 words with zero filler?\n\nAppend scores as an HTML comment:\n<!-- QA: BrandContinuity=X, Clarity=X, Timestamp=X, ExpBridge=X, Brevity=X -->\n\nConsistent 5/5/5/5 means your rubric has softened. Recalibrate."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        768,
+        -400
+      ],
+      "id": "262d4cbb-afa6-4467-b1f0-31e9194cb84d",
+      "name": "AI Agent6"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        848,
+        -176
+      ],
+      "id": "4262835b-412c-4f29-a612-40d5249f3a26",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "wGr3y6h2e3XEkMOz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write a booking confirmation email. The lead's First Name is: {{ $('get database').item.json['names '] }}. Their appointment start time is: {{ $json['time booked for call'] }}",
+        "options": {
+          "systemMessage": "=IDENTITY\nYou are Alex — the same dispatcher who sent the original emergency outreach email. The homeowner has now booked a 15-minute call with a technician. This email is the next touchpoint in the same sequence — it must look and feel like it came from the same person, same system, same brand.\n\nThis is a call confirmation, not a dispatch. No technician is coming to their home yet. The 15-minute call is how the tech understands the problem and confirms the physical visit. Make that clear without making it feel like a delay.\n\n\n\nCONTEXT YOU HAVE\n— Lead first name: {{ $('get database').item.json['names '] }}\n— Service type: Emergency Repair\n— Call date and time: {{ $json['time booked for call'] }}\n— What this is: a 15-minute call with a technician to assess the issue and lock in the on-site visit\n\n\n\nTASK\nWrite a confirmation email that does three things only:\n\n1. Confirm the call is locked in — personal and definitive, not automated\n2. State the call time in plain human language — convert ISO to readable (\"Tuesday, April 22nd at 10:15 AM\" — if today, say \"today at 10:15 AM\")\n3. Set expectations: this quick call lets the tech understand exactly what's going on so they can get someone out as fast as possible — frame it as the fast path to a fix, not a step in a process\n\n\n\nTHE GENERIC VS ALEX STANDARD\n— Generic: \"Your call has been scheduled for April 22nd at 10:15 AM.\"\n— Alex: \"You're booked in for a quick call Tuesday at 10:15 — the tech will use those 15 minutes to understand exactly what's going on and get someone out to you as fast as possible.\"\n\nOne sentence of expectation-setting does more work than three sentences of reassurance.\n\n\n\nTONE RULES\n— Same calm, fast, human register as the outreach emails — continuity of voice matters\n— No corporate language (\"your booking has been received\", \"our team will contact you\")\n— No over-reassurance — they need to know what's happening next, not be talked down\n— Hard cap: 80 words in the body\n\n\n\nOUTPUT RULES (STRICT)\n— Raw HTML only, using the exact brand template below — same template as every other email in this sequence\n— No markdown fences, no subject line, no preamble outside the HTML\n— Convert {{ $json['time booked for call'] }} from ISO to plain human language before inserting\n— Never alter the CTA button color (#f26b3a), footer text, font stack, border, or sign-off structure — these must match the outreach emails exactly\n\n\n\nBRAND TEMPLATE\n<div style=\"font-family: 'DM Sans', Arial, sans-serif; color: #1a140e; max-width: 600px; margin: 0 auto; padding: 20px; border: 1.5px solid #eaeaea; border-radius: 10px;\">\n  <h2 style=\"color: #1a140e; font-family: 'Syne', sans-serif;\">Call confirmed,.{{ $('get database').item.json['names '] }}</h2>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    [Body: call locked in → time in plain human language → what the 15 minutes does for them. 80 words max.]\n  </p>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    If anything changes before the call, just reply here.<br><br>\n    Hang in there,<br>\n    <strong>Alex</strong><br>\n    HVAC Pro Dispatch\n  </p>\n  <hr style=\"border: none; border-top: 1px solid #eaeaea; margin: 20px 0;\">\n  <p style=\"font-size: 12px; color: #8c7b70; text-align: center;\">\n    Join our 2,400+ happy clients! ★★★★★ Top-rated local HVAC\n  </p>\n</div>\n\n\n\nSELF-IMPROVEMENT PROTOCOL\nBefore outputting, score the draft 1–5. Revise any score below 4.\n\n1. Brand continuity — Does this email look and feel like it came from the same Alex who sent the outreach? Same voice, same structure, same footer?\n2. Clarity — Is it unmistakably clear this confirms a call, not a technician visit?\n3. Human timestamp — Is the time written as a person would say it, not pasted from ISO format?\n4. Expectation bridge — Does the email explain what the 15-minute call achieves for them — the fast path to a fix?\n5. Brevity — Is the body at or under 80 words with zero filler?\n\nAppend scores as an HTML comment:\n<!-- QA: BrandContinuity=X, Clarity=X, Timestamp=X, ExpBridge=X, Brevity=X -->\n\nConsistent 5/5/5/5 means your rubric has softened. Recalibrate."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        768,
+        0
+      ],
+      "id": "0c48bfae-5b86-4eea-9bc8-1409c6f605ed",
+      "name": "AI Agent7"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write a booking confirmation email. The lead's First Name is: {{ $('get database').item.json['names '] }}. Their appointment start time is: {{ $json['time booked for call'] }}",
+        "options": {
+          "systemMessage": "=IDENTITY\nYou are Alex — the same dispatcher who sent the original emergency outreach email. The homeowner has now booked a 15-minute call with a technician. This email is the next touchpoint in the same sequence — it must look and feel like it came from the same person, same system, same brand.\n\nThis is a call confirmation, not a dispatch. No technician is coming to their home yet. The 15-minute call is how the tech understands the problem and confirms the physical visit. Make that clear without making it feel like a delay.\n\n\n\nCONTEXT YOU HAVE\n— Lead first name: {{ $('get database').item.json['names '] }}\n— Service type: Emergency Repair\n— Call date and time: {{ $json['time booked for call'] }}\n— What this is: a 15-minute call with a technician to assess the issue and lock in the on-site visit\n\n\n\nTASK\nWrite a confirmation email that does three things only:\n\n1. Confirm the call is locked in — personal and definitive, not automated\n2. State the call time in plain human language — convert ISO to readable (\"Tuesday, April 22nd at 10:15 AM\" — if today, say \"today at 10:15 AM\")\n3. Set expectations: this quick call lets the tech understand exactly what's going on so they can get someone out as fast as possible — frame it as the fast path to a fix, not a step in a process\n\n\n\nTHE GENERIC VS ALEX STANDARD\n— Generic: \"Your call has been scheduled for April 22nd at 10:15 AM.\"\n— Alex: \"You're booked in for a quick call Tuesday at 10:15 — the tech will use those 15 minutes to understand exactly what's going on and get someone out to you as fast as possible.\"\n\nOne sentence of expectation-setting does more work than three sentences of reassurance.\n\n\n\nTONE RULES\n— Same calm, fast, human register as the outreach emails — continuity of voice matters\n— No corporate language (\"your booking has been received\", \"our team will contact you\")\n— No over-reassurance — they need to know what's happening next, not be talked down\n— Hard cap: 80 words in the body\n\n\n\nOUTPUT RULES (STRICT)\n— Raw HTML only, using the exact brand template below — same template as every other email in this sequence\n— No markdown fences, no subject line, no preamble outside the HTML\n— Convert {{ $json['time booked for call'] }} from ISO to plain human language before inserting\n— Never alter the CTA button color (#f26b3a), footer text, font stack, border, or sign-off structure — these must match the outreach emails exactly\n\n\n\nBRAND TEMPLATE\n<div style=\"font-family: 'DM Sans', Arial, sans-serif; color: #1a140e; max-width: 600px; margin: 0 auto; padding: 20px; border: 1.5px solid #eaeaea; border-radius: 10px;\">\n  <h2 style=\"color: #1a140e; font-family: 'Syne', sans-serif;\">Call confirmed,.{{ $('get database').item.json['names '] }}</h2>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    [Body: call locked in → time in plain human language → what the 15 minutes does for them. 80 words max.]\n  </p>\n  <p style=\"line-height: 1.6; color: #1a140e; font-size: 16px;\">\n    If anything changes before the call, just reply here.<br><br>\n    Hang in there,<br>\n    <strong>Alex</strong><br>\n    HVAC Pro Dispatch\n  </p>\n  <hr style=\"border: none; border-top: 1px solid #eaeaea; margin: 20px 0;\">\n  <p style=\"font-size: 12px; color: #8c7b70; text-align: center;\">\n    Join our 2,400+ happy clients! ★★★★★ Top-rated local HVAC\n  </p>\n</div>\n\n\n\nSELF-IMPROVEMENT PROTOCOL\nBefore outputting, score the draft 1–5. Revise any score below 4.\n\n1. Brand continuity — Does this email look and feel like it came from the same Alex who sent the outreach? Same voice, same structure, same footer?\n2. Clarity — Is it unmistakably clear this confirms a call, not a technician visit?\n3. Human timestamp — Is the time written as a person would say it, not pasted from ISO format?\n4. Expectation bridge — Does the email explain what the 15-minute call achieves for them — the fast path to a fix?\n5. Brevity — Is the body at or under 80 words with zero filler?\n\nAppend scores as an HTML comment:\n<!-- QA: BrandContinuity=X, Clarity=X, Timestamp=X, ExpBridge=X, Brevity=X -->\n\nConsistent 5/5/5/5 means your rubric has softened. Recalibrate."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        768,
+        192
+      ],
+      "id": "36000a29-b04a-444e-99cf-c45838ff6888",
+      "name": "AI Agent8"
+    }
+  ],
+  "pinData": {
+    "Append or update row in sheet1": [
+      {
+        "json": {
+          "email": "agugodiyi@gmail.com",
+          "names ": "ponce",
+          "phone": "(987) 666-5432",
+          "owner status": "homeowner",
+          "service type": "repair",
+          "time stamp": "2026-04-18T15:53:45.929Z"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "lead trap from landing page": [
+      {
+        "json": {
+          "headers": {
+            "host": "bigcroc.steprotech.com",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "102.90.98.85",
+            "x-real-ip": "102.90.98.85",
+            "content-length": "165",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+            "sec-ch-ua": "\"Google Chrome\";v=\"147\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"147\"",
+            "content-type": "application/json",
+            "sec-ch-ua-mobile": "?0",
+            "accept": "*/*",
+            "origin": "http://hvacleadsytem.s3-website.eu-north-1.amazonaws.com",
+            "sec-fetch-site": "cross-site",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-dest": "empty",
+            "referer": "http://hvacleadsytem.s3-website.eu-north-1.amazonaws.com/",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "en-US,en-GB;q=0.9,en;q=0.8",
+            "priority": "u=1, i"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "firstName": "kilton",
+            "phone": "(775) 757-5775",
+            "email": "dcrocfods@gmail.com",
+            "ownerStatus": "renter",
+            "serviceType": "install",
+            "submittedAt": "2026-04-19T14:19:03.985Z"
+          },
+          "webhookUrl": "https://bigcroc.steprotech.com/webhook-test/de7d263c-646b-4355-96c5-fc14c1762d55",
+          "executionMode": "test"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "cal,com webhook ": [
+      {
+        "json": {
+          "headers": {
+            "connection": "keep-alive",
+            "host": "bigcroc.steprotech.com",
+            "x-forwarded-scheme": "https",
+            "x-forwarded-proto": "https",
+            "x-forwarded-for": "5.60.65.64",
+            "x-real-ip": "5.60.65.64",
+            "content-length": "2800",
+            "content-type": "application/json",
+            "x-cal-signature-256": "no-secret-provided",
+            "x-cal-webhook-version": "2021-10-20",
+            "accept": "*/*",
+            "accept-language": "*",
+            "sec-fetch-mode": "cors",
+            "user-agent": "node",
+            "accept-encoding": "br, gzip, deflate"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "triggerEvent": "BOOKING_CREATED",
+            "createdAt": "2026-04-19T11:55:44.522Z",
+            "payload": {
+              "bookerUrl": "https://cal.com",
+              "title": "emergency repair between D'croc foods and Jonah",
+              "startTime": "2026-04-22T10:30:00.000Z",
+              "endTime": "2026-04-22T10:45:00.000Z",
+              "additionalNotes": "",
+              "type": "emergency-repair",
+              "description": "short call for your emergency repairs",
+              "eventTypeId": 5411742,
+              "hideCalendarNotes": false,
+              "hideCalendarEventDetails": false,
+              "hideOrganizerEmail": false,
+              "schedulingType": null,
+              "seatsPerTimeSlot": null,
+              "seatsShowAttendees": true,
+              "seatsShowAvailabilityCount": true,
+              "customReplyToEmail": null,
+              "disableRescheduling": false,
+              "disableReschedulingScope": "HOST_AND_ATTENDEE",
+              "disableCancelling": false,
+              "disableCancellingScope": "HOST_AND_ATTENDEE",
+              "organizer": {
+                "id": 2363306,
+                "name": "D'croc foods",
+                "email": "dcrocfoods@gmail.com",
+                "username": "d-croc-foods-vsppbn",
+                "timeZone": "Europe/London",
+                "language": {
+                  "locale": "en"
+                },
+                "timeFormat": "h:mma",
+                "utcOffset": 60
+              },
+              "attendees": [
+                {
+                  "name": "Jonah",
+                  "email": "Agugodiyi@gmail.com",
+                  "timeZone": "Africa/Lagos",
+                  "language": {
+                    "locale": "en"
+                  },
+                  "phoneNumber": null,
+                  "bookingSeat": null,
+                  "utcOffset": 60,
+                  "firstName": "Jonah",
+                  "lastName": ""
+                }
+              ],
+              "customInputs": {},
+              "responses": {
+                "name": {
+                  "label": "your_name",
+                  "value": "Jonah"
+                },
+                "email": {
+                  "label": "email_address",
+                  "value": "Agugodiyi@gmail.com"
+                },
+                "guests": {
+                  "label": "guests",
+                  "value": []
+                },
+                "location": {
+                  "label": "location",
+                  "value": {
+                    "value": "integrations:daily",
+                    "optionValue": ""
+                  }
+                }
+              },
+              "userFieldsResponses": {},
+              "location": "integrations:daily",
+              "iCalUID": "7DPsbcoTY3L4h16avt4koM@Cal.com",
+              "iCalSequence": 0,
+              "requiresConfirmation": false,
+              "oneTimePassword": null,
+              "platformClientId": "",
+              "platformRescheduleUrl": "",
+              "platformCancelUrl": "",
+              "platformBookingUrl": "",
+              "uid": "7DPsbcoTY3L4h16avt4koM",
+              "organizationId": null,
+              "hashedLink": null,
+              "hideBranding": false,
+              "videoCallData": {
+                "type": "daily_video",
+                "id": "8sUBVgiHS9ts8PuWnJud",
+                "password": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyIjoiOHNVQlZnaUhTOXRzOFB1V25KdWQiLCJleHAiOjE3NzgwNjQzMDAsIm8iOnRydWUsImVydWkiOmZhbHNlLCJkIjoiYmJkOThhNzEtMTljOS00YmIxLWE1YzUtY2FmMWVjNWJkMTA1IiwiaWF0IjoxNzc2NTk5NzQzfQ.XUWVqriEoaXs8lWf98gIqIOdcT6Xdbh8i2fTKk41ulE",
+                "url": "https://app.cal.com/video/7DPsbcoTY3L4h16avt4koM"
+              },
+              "appsStatus": [
+                {
+                  "appName": "Cal Video",
+                  "type": "daily_video",
+                  "success": 1,
+                  "failures": 0,
+                  "errors": []
+                },
+                {
+                  "appName": "Google Calendar",
+                  "type": "google_calendar",
+                  "success": 1,
+                  "failures": 0,
+                  "errors": []
+                }
+              ],
+              "destinationCalendar": [
+                {
+                  "id": 1233929,
+                  "integration": "google_calendar",
+                  "externalId": "dcrocfoods@gmail.com",
+                  "primaryEmail": "dcrocfoods@gmail.com",
+                  "userId": 2363306,
+                  "credentialId": 1985077
+                }
+              ],
+              "bookingId": 18498775,
+              "status": "ACCEPTED",
+              "eventTitle": "emergency repair",
+              "eventDescription": "short call for your emergency repairs",
+              "price": 0,
+              "currency": "usd",
+              "length": 15,
+              "assignmentReason": [],
+              "metadata": {
+                "videoCallUrl": "https://app.cal.com/video/7DPsbcoTY3L4h16avt4koM"
+              }
+            }
+          },
+          "webhookUrl": "https://bigcroc.steprotech.com/webhook-test/313c88a9-ba20-4bc0-bd2f-a885aa89296c",
+          "executionMode": "test"
+        }
+      }
+    ],
+    "config": [
+      {
+        "json": {
+          "body": {
+            "payload": {
+              "attendees": [
+                {
+                  "email": "Agugodiyi@gmail.com"
+                }
+              ],
+              "status": "ACCEPTED",
+              "startTime": "2026-04-22T10:30:00.000Z"
+            }
+          },
+          "email normalised": "agugodiyi@gmail.com"
+        }
+      }
+    ],
+    "config2": [
+      {
+        "json": {
+          "body": {
+            "payload": {
+              "attendees": [
+                {
+                  "email": "agugodiyi@gmail.com"
+                }
+              ],
+              "status": "ACCEPTED",
+              "startTime": "2026-04-21T10:15:00.000Z"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append or update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append or update row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet3": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent3",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent4",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent5",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent3": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent4": {
+      "main": [
+        [
+          {
+            "node": "Send a message4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message3": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "AI Agent5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent5": {
+      "main": [
+        [
+          {
+            "node": "Send a message5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "lead trap from landing page": {
+      "main": [
+        [
+          {
+            "node": "guard against spoofs and invalid data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "guard against spoofs and invalid data": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cal,com webhook ": {
+      "main": [
+        [
+          {
+            "node": "config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "config": {
+      "main": [
+        [
+          {
+            "node": "get database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get database": {
+      "main": [
+        [
+          {
+            "node": "update database on wether lead has booked and time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update database on wether lead has booked and time": {
+      "main": [
+        [
+          {
+            "node": "AI Agent6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cal,com webhook 1": {
+      "main": [
+        [
+          {
+            "node": "config1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "config1": {
+      "main": [
+        [
+          {
+            "node": "get database1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get database1": {
+      "main": [
+        [
+          {
+            "node": "update database on wether lead has booked and time1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update database on wether lead has booked and time1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cal,com webhook 2": {
+      "main": [
+        [
+          {
+            "node": "config2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "config2": {
+      "main": [
+        [
+          {
+            "node": "get database2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get database2": {
+      "main": [
+        [
+          {
+            "node": "update database on wether lead has booked and time2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update database on wether lead has booked and time2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent6": {
+      "main": [
+        [
+          {
+            "node": "send follow up email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent6",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent7",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "AI Agent8",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent7": {
+      "main": [
+        [
+          {
+            "node": "send follow up email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent8": {
+      "main": [
+        [
+          {
+            "node": "send follow up email2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e5a1c608-f407-498e-a094-fdd4aeec238d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0b1ff0f737f88919803915467ec665e830c3958b032184756c83c42257e3016f"
+  },
+  "id": "ew2wnSLXrag8xt0B",
+  "tags": []
+}
